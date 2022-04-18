@@ -40,8 +40,6 @@ class ProductController extends Controller
     {
         $new_product = Product::create($request-> all());
         $new_product-> save();
-
-        return redirect()-> route('product.index');
     }
 
     /**
