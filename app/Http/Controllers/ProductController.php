@@ -71,8 +71,10 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, product $product)
+    public function update(Request $request, $id)
     {
+        $product = product::find($id);
+
         $product-> code = $request-> code;
         $product-> name = $request-> name;
         $product-> image = $request-> image;
@@ -81,8 +83,6 @@ class ProductController extends Controller
         $product-> top = $request-> top;
         
         $product-> save();
-
-        return redirect()-> route('product.index');
     }
 
     /**
