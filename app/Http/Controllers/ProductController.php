@@ -38,6 +38,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request -> validate([
+            'code' => 'required|numeric|digits_between:1,9',
+            'name' => 'required',
+            'inventory' => 'required',
+            'top' => 'required',
+            'image' => 'required',
+            'price' => 'required',
+
+        ]);
+
         $new_product = Product::create($request-> all());
         $new_product-> save();
     }
@@ -73,6 +83,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $request -> validate([
+            'code' => 'required|numeric|digits_between:1,9',
+            'name' => 'required',
+            'inventory' => 'required',
+            'top' => 'required',
+            'image' => 'required',
+            'price' => 'required',
+
+        ]);
+        
         $product = product::find($id);
 
         $product-> code = $request-> code;
