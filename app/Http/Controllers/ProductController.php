@@ -26,7 +26,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         return view('create');
     }
 
@@ -38,18 +38,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request -> validate([
-            'code' => 'required|numeric|digits_between:1,9',
-            'name' => 'required',
-            'inventory' => 'required',
-            'top' => 'required',
+        $validated = $request->validate([
+            'code' => 'required|numeric|digits_between:1,9|unique:products',
+            'name' => 'required|max:50',
+            'inventory' => 'required|numeric|digits_between:1,9',
+            'top' => 'required|boolean',
             'image' => 'required',
-            'price' => 'required',
-
+            'price' => 'required|numeric|digits_between:1,9',
         ]);
 
-        $new_product = Product::create($request-> all());
-        $new_product-> save();
+        $new_product = Product::create($request->all());
+        $new_product->save();
     }
 
     /**
@@ -83,26 +82,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request -> validate([
-            'code' => 'required|numeric|digits_between:1,9',
-            'name' => 'required',
-            'inventory' => 'required',
-            'top' => 'required',
+        $validated = $request->validate([   
+            'code' => 'required|numeric|digits_between:1,9|unique:products,code,' . $id,
+            'name' => 'required|regex:/^[0-9a-zA-ZÑñ\-_.\s]+$/|max:50',
+            'inventory' => 'required|numeric|digits_between:1,9',
+            'top' => 'required|boolean',
             'image' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric|digits_between:1,9',
 
         ]);
-        
+
         $product = product::find($id);
 
-        $product-> code = $request-> code;
-        $product-> name = $request-> name;
-        $product-> image = $request-> image;
-        $product-> price = $request-> price;
-        $product-> inventory = $request-> inventory;
-        $product-> top = $request-> top;
-        
-        $product-> save();
+        $product->code = $request->code;
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->price = $request->price;
+        $product->inventory = $request->inventory;
+        $product->top = $request->top;
+
+        $product->save();
     }
 
     /**
@@ -110,10 +109,10 @@ class ProductController extends Controller
      *
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
-     */       
-    public function destroy( $id )
+     */
+    public function destroy($id)
     {
         $product = product::find($id);
-        $product-> delete();
+        $product->delete();
     }
 }
