@@ -44,7 +44,7 @@ class ProductController extends Controller
             'inventory' => 'required|numeric|digits_between:1,9',
             'top' => 'required|boolean',
             'image' => 'required',
-            'price' => 'required|numeric|digits_between:1,9',
+            'price' => 'required|numeric|between:1,999999999.99',
         ]);
 
         $new_product = Product::create($request->all());
@@ -88,7 +88,7 @@ class ProductController extends Controller
             'inventory' => 'required|numeric|digits_between:1,9',
             'top' => 'required|boolean',
             'image' => 'required',
-            'price' => 'required|numeric|digits_between:1,9',
+            'price' => 'required|numeric|between:1,999999999.99',
 
         ]);
 
